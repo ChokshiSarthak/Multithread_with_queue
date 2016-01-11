@@ -22,7 +22,7 @@ private:
     pthread_mutex_t m_queue_mutex;
     pthread_t insert_thread, lookup_thread;
     pthread_cond_t m_startLookup_cond;
-    std::queue<int> myqueue;
+    std::queue<char *> myqueue;
 
 };
 

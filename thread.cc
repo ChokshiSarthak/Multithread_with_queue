@@ -1,5 +1,5 @@
+#include<string.h>
 #include "thread.h"
-
 Thread::Thread()
 {
 
@@ -32,9 +32,11 @@ void *Thread::InsertElementHelper(void *obj){
 void Thread::InsertElement(){
 
      pthread_mutex_lock(&m_queue_mutex);
-     int a = 22;
-     std::cout << "Inserting element " << a << " to queue " << "\n";
-     myqueue.push(a);
+     char *a = "sarthak";
+     char *b = new char[strlen(a)+1];
+     strcpy(b,a);
+     std::cout << "Inserting element " << b << " to queue " << "\n";
+     myqueue.push(b);
      if(myqueue.size() > 0){
           std::cout << "Send signal to look up thread:" << "\n";
           pthread_cond_signal(&m_startLookup_cond);
@@ -57,8 +59,9 @@ void Thread::LookUpElement(){
           pthread_cond_wait(&m_startLookup_cond,&m_queue_mutex);
      }
      std::cout << "Lookup: wakes up " << "\n";
-     int a = myqueue.front();
-     std::cout << "element in the queue is: " << a << "\n";
+     char *b = myqueue.front();
+     std::cout << "element in the queue is: " << b << "\n";
+     delete [] b;
      myqueue.pop();
      pthread_mutex_unlock(&m_queue_mutex);    
 }
